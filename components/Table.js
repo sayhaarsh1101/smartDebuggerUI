@@ -26,16 +26,16 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(oid,status,reason,suggestion,time) {
+  return { oid,status,reason,suggestion,time};
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData(1,"Failed","Duplicate order id","Send a unique order id","10:18"),
+  createData(2,"Failed","Incorrect order id","Send a correctorder id","10:20"),
+  createData(3,"Failed","order id does'nt exist","Send a unique order id","10:8"),
+  createData(4,"Failed","Duplicate order id","Send a unique order id","10:12"),
+  createData(5,"Failed","Incorrect order id","Send a correct order id","10:19"),
 ];
 
 const useStyles = makeStyles({
@@ -52,23 +52,23 @@ export default function CustomizedTables() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead style={{backgroundColor:'#00b9f5'}}>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Order ID</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
+            <StyledTableCell align="right">Reason</StyledTableCell>
+            <StyledTableCell align="right">Suggestion</StyledTableCell>
+            <StyledTableCell align="right">Time</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.oid}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.oid}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              <StyledTableCell align="right">{row.reason}</StyledTableCell>
+              <StyledTableCell align="right">{row.suggestion}</StyledTableCell>
+              <StyledTableCell align="right">{row.time}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
