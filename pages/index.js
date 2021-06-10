@@ -1,5 +1,5 @@
 
-import Tables from '../components/Table'
+
 import { Select } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FormGroup, Label, Input, Button } from 'reactstrap'
@@ -18,7 +18,7 @@ export default function Home() {
         <Filter></Filter>
       </div>
       <div style={{ marginTop: '5%', marginLeft: '5%', marginRight: '5%' }}>
-        <Tables></Tables>
+        
       </div>
 
     </>

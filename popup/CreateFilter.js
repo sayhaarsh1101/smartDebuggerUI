@@ -22,8 +22,8 @@ const CreateFilter = ({modal, toggle, save}) => {
     const handleSave = (e) => {
         e.preventDefault()
         let filterObj = {}
-        filterObj["fieldName"] = field
-        filterObj["fieldData"] = fieldValue
+        filterObj["field"] = field
+        filterObj["fieldValue"] = fieldValue
         save(filterObj)
     }
 
@@ -37,10 +37,12 @@ const CreateFilter = ({modal, toggle, save}) => {
                     <Input type="select" name="select" id="exampleSelect" 
                     onChange = {handleChange}>
                         <option>--select--</option>
+                        <option>mid</option>
                         <option>orderId</option>
                         <option>amount</option>
                         <option>systemname</option>
                         <option>status</option>
+                        <option>timestamp</option>
                     </Input>
                 </FormGroup>
                 <FormGroup style = {{marginTop: '20px'}}>

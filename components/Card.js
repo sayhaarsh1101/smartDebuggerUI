@@ -4,7 +4,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 
 
-const Card = ({filterObj,index, deleteTask, updateListArray,filterList}) => {
+const Card = ({filterObj,index, deleteTask, updateListArray}) => {
 
     const toggle = () => {
         setModal(!modal);
@@ -23,8 +23,8 @@ const Card = ({filterObj,index, deleteTask, updateListArray,filterList}) => {
         <div class = "card-wrapper mr-5">
             <div class = "card-top"></div>
             <div class = "task-holder">
-                <span class = "card-header" style={{"background-color": '#ffffff', "border-radius": "8px"}}>{filterObj.fieldName}</span>
-                <p style={{color:"white"}}className = "mt-3">{filterObj.fieldData}</p>       
+                <span class = "card-header" style={{"background-color": '#ffffff', "border-radius": "8px"}}>{filterObj.field}</span>
+                <p style={{color:"white"}}className = "mt-3">{filterObj.fieldValue}</p>       
         </div>
         <div >
                <EditIcon  style={{color:'#1a1a1a'}} onClick = {() => setModal(true)}></EditIcon>
