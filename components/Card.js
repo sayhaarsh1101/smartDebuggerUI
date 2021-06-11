@@ -4,7 +4,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 
 
-const Card = ({filterObj,index, deleteTask, updateListArray}) => {
+const Card = ({filterObj,index, deleteFilter, updateListArray}) => {
 
     const toggle = () => {
         setModal(!modal);
@@ -14,7 +14,7 @@ const Card = ({filterObj,index, deleteTask, updateListArray}) => {
     }
 
     const handleDelete = () => {
-        deleteTask(index)
+        deleteFilter(index)
         console.log("ffffff")
     }
 

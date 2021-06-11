@@ -6,10 +6,12 @@ import Tables from '../components/Tables'
 
 const Filter = () => {
    
-    let tableList=[];
+ 
+       /* let tableList=[{"mid":"ABC123","systemname":"theia","timestamp":1623155141812,"status":null,"reason":null},
+   {"mid":"ABC123","systemname":"theia","timestamp":1623156329834,"status":null,"reason":null}]; */
     const [modal, setModal] = useState(false);
     const [filterList,setFilterList]=useState([])
-    //const [tableList,setTableList]=useState([])
+    const [tableList,setTableList]=useState([])
 
     useEffect(() => {
         let arr = localStorage.getItem("filterList")
@@ -20,13 +22,15 @@ const Filter = () => {
         }
     }, [])
 
-    const deleteTask = (index) => {
+    const deleteFilter = (index) => {
         let tempList = filterList
         tempList.splice(index, 1)
         localStorage.setItem("filterList", JSON.stringify(tempList))
         setFilterList(tempList)
-        window.location.reload()
-
+         //fetchData();
+         window.location.reload()
+         fetchData()
+        
     
     }
 
@@ -53,25 +57,32 @@ const Filter = () => {
     }
 
     async function fetchData(){
-        const url = 'http://localhost:8080/getbyquery';
 
-        const settings={
-        method: 'POST',
-        body: JSON.stringify(filterList),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+        if(filterList.length===0){
+            setTableList([{"mid":null,"systemname":null,"timestamp":null,"status":null,"reason":null}])
+        }else{
+            const url = 'http://localhost:8080/getbyquery';
+
+            const settings={
+            method: 'POST',
+            body: JSON.stringify(filterList),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        };
+           var res= await fetch(url,settings).
+           then(response => response.text()).then(data=>{
+               
+                setTableList(JSON.parse(data));
+                
+                return data;
+            });
+               
         }
-    };
-    
-       var res= await fetch(url,settings).
-       then(response => response.text()).then(data=>{
-           tableList=data;
-            //console.log("data is",data)
-            //console.log("tableList is",tableList)   
-        });
-
+       
         
     }
+
 
     return (
         <>
@@ -83,14 +94,14 @@ const Filter = () => {
             </div>
 
             <div className = "filter-container">
-            {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteTask = {deleteTask} updateListArray = {updateListArray}/> )}
+            {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter} updateListArray = {updateListArray}/> )}
             </div>
-            <CreateFilter toggle = {toggle} modal = {modal} save = {saveFilter}/>
-            <div className = "header text-center">
+            <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
+            {/* <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
-            </div>
-            <Tables tableList={tableList}></Tables>
+            </div> */}
+      <Tables tableList={tableList}></Tables>
         </>
     )
 }

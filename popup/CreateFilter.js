@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
-const CreateFilter = ({modal, toggle, save}) => {
+const CreateFilter = ({fetchData,modal, toggle, save}) => {
       
 
     const [field, setField] = useState('')
@@ -15,16 +15,13 @@ const CreateFilter = ({modal, toggle, save}) => {
         else setFieldValue(value)
     }
 
-   /*  const handleSave = (e) => {
-        saveFilter(field, fieldValue)
-    } */
-
     const handleSave = (e) => {
         e.preventDefault()
         let filterObj = {}
         filterObj["field"] = field
         filterObj["fieldValue"] = fieldValue
         save(filterObj)
+        fetchData()
     }
 
     return (

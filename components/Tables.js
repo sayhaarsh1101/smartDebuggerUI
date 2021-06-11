@@ -29,9 +29,10 @@ const useStyles = makeStyles(theme => ({
 
 const Tables = ({tableList}) => {
     const classes = useStyles();
+    
+    console.log("tableList in table is ",tableList)
 
-    console.log("table list in table ",tableList)
-    console.log("hhhhhhh")
+    console.log("length is ",tableList.length)
     return (
         <div style={{marginLeft: 60, marginRight: 60}}>
 
