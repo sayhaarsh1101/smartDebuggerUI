@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react'
+import React, {useState} from 'react'
 import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
