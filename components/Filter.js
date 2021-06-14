@@ -6,41 +6,22 @@ import Tables from '../components/Tables'
 
 const Filter = () => {
    
- 
-       /* let tableList=[{"mid":"ABC123","systemname":"theia","timestamp":1623155141812,"status":null,"reason":null},
-   {"mid":"ABC123","systemname":"theia","timestamp":1623156329834,"status":null,"reason":null}]; */
     const [modal, setModal] = useState(false);
     const [filterList,setFilterList]=useState([])
     const [tableList,setTableList]=useState([])
 
-    useEffect(() => {
-        let arr = localStorage.getItem("filterList")
-       
-        if(arr){
-            let obj = JSON.parse(arr)
-            setFilterList(obj)
-        }
-    }, [])
 
     const deleteFilter = (index) => {
         let tempList = filterList
         tempList.splice(index, 1)
-        localStorage.setItem("filterList", JSON.stringify(tempList))
         setFilterList(tempList)
-         
-         window.location.reload()
-         //fetchData();
-        
-    
+         if(tempList.length===0){
+             setTableList([]);
+         }else fetchData();
+   
     }
 
-    const updateListArray = (obj, index) => {
-        let tempList = filterList
-        tempList[index] = obj
-        localStorage.setItem("filterList", JSON.stringify(tempList))
-        setFilterList(tempList)
-        window.location.reload()
-    }
+
 
     const toggle = () => {
         setModal(!modal)
@@ -49,19 +30,14 @@ const Filter = () => {
     const saveFilter = (filterObj) => {
         let tempList = filterList
         tempList.push(filterObj)
-        localStorage.setItem("filterList", JSON.stringify(tempList))
         setFilterList(filterList)
         setModal(false)
-
         console.log("filterList is",filterList)
     }
 
     async function fetchData(){
-
-        if(filterList.length===0){
-            setTableList([{"mid":null,"systemname":null,"timestamp":null,"status":null,"reason":null}])
-        }else{
-            const url = 'http://localhost:8080/getbyquery';
+ 
+        const url = 'http://localhost:8080/getbyquery';
 
             const settings={
             method: 'POST',
@@ -73,13 +49,13 @@ const Filter = () => {
            var res= await fetch(url,settings).
            then(response => response.text()).then(data=>{
                
+            
                 setTableList(JSON.parse(data));
                 
                 return data;
             });
-               
-        }
-       
+       /* console.log("the res is",res)
+       console.log("the list of res is",res._source) */
         
     }
 
@@ -94,13 +70,13 @@ const Filter = () => {
             </div>
 
             <div className = "filter-container">
-            {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter} updateListArray = {updateListArray}/> )}
+            {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
             <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
-            <div className = "header text-center">
+           {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
-            </div>
+            </div> */}
       <Tables tableList={tableList}></Tables>
         </>
     )

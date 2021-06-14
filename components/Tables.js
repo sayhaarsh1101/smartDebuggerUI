@@ -27,7 +27,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+async  function  dateconverter (tableList){
+  tableList.map(data=>
+  {
+    const dateObject = new Date(data.timestamp)
+    const dateAsString = dateObject.toLocaleString()
+      data.timestamp = dateAsString
+  })
+  return tableList;
+  }
+
 const Tables = ({tableList}) => {
+
+    dateconverter(tableList);
     const classes = useStyles();
     
     console.log("tableList in table is ",tableList)
