@@ -3,10 +3,10 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
-const CreateFilter = ({modal, toggle, saveFilter}) => {
+const CreateFilter = ({fetchData,modal, toggle, save}) => {
       
 
-    const [field, setField] = useState('mid')
+    const [field, setField] = useState('')
     const [fieldValue, setFieldValue] = useState('')
 
     const handleChange = (e) => {
@@ -16,7 +16,12 @@ const CreateFilter = ({modal, toggle, saveFilter}) => {
     }
 
     const handleSave = (e) => {
-        saveFilter(field, fieldValue)
+        e.preventDefault()
+        let filterObj = {}
+        filterObj["field"] = field
+        filterObj["fieldValue"] = fieldValue
+        save(filterObj)
+        fetchData()
     }
 
     return (
@@ -28,11 +33,13 @@ const CreateFilter = ({modal, toggle, saveFilter}) => {
                     <Label for="exampleSelect">Choose any field</Label>
                     <Input type="select" name="select" id="exampleSelect" 
                     onChange = {handleChange}>
+                        <option>--select--</option>
                         <option>mid</option>
+                        <option>orderId</option>
                         <option>amount</option>
                         <option>systemname</option>
-                        <option>time</option>
                         <option>status</option>
+                        <option>timestamp</option>
                     </Input>
                 </FormGroup>
                 <FormGroup style = {{marginTop: '20px'}}>

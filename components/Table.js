@@ -1,78 +1,67 @@
-import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React from 'react'
+import {TableHead, TableBody, TableCell, TableRow, Table}
+ from '@material-ui/core'
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: "#00b9f5",
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
   },
-}))(TableRow);
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-const useStyles = makeStyles({
   table: {
-    minWidth: 700,
+    minWidth: 650,
   },
-});
+  selectTableCell: {
+    width: 60
+  },
+  tableCell: {
+    width: 80,
+    height: 40
+  },
+  input: {
+    width: 80,
+    height: 40
+  }
+}));
 
-export default function CustomizedTables() {
-  const classes = useStyles();
+const Tables = ({tableList}) => {
+    const classes = useStyles();
+    
+    console.log("tableList in table is ",tableList)
 
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead style={{backgroundColor:'#00b9f5'}}>
-          <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+    console.log("length is ",tableList.length)
+    return (
+        <div style={{marginLeft: 60, marginRight: 60}}>
+
+            <Paper className={classes.root} >
+                <Table border="1" style={{width: '100%', justifyContent: 'center'}} size="small" 
+              aria-label="caption label">
+                 <TableHead>
+                     <TableRow style={{backgroundColor:'burlywood',color:'alice'}} >
+                         <TableCell>mid</TableCell>
+                         <TableCell>status</TableCell>
+                         <TableCell>reason</TableCell>
+                         <TableCell>timestamp</TableCell>
+                         <TableCell>systemname</TableCell>
+                         </TableRow>
+                 </TableHead>
+                  <TableBody>
+                      {tableList.map(data=>(
+                      <TableRow key={data.id}>
+                      <TableCell>{data.mid}</TableCell>
+                      <TableCell>{data.status}</TableCell>
+                      <TableCell>{data.reason}</TableCell>
+                      <TableCell>{data.timestamp}</TableCell>
+                      <TableCell>{data.systemname}</TableCell>
+            
+                      </TableRow>
+                      ))}
+                  </TableBody>
+              </Table>
+            </Paper>
+        </div>
+    )
 }

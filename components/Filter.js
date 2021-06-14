@@ -1,48 +1,107 @@
-import React, {useState} from 'react'
+import React, {useEffect,useState} from 'react'
 import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
-import Card from './Card'
+import Card from '../components/Card'
+import Tables from './Table'
 
 const Filter = () => {
-    const [transaction, setTransaction] = useState({
-        mid: "",
-        amount: "",
-        systemname: "",
-        time: "",
-        status: ""
-    })  
-
+   
+ 
+       /* let tableList=[{"mid":"ABC123","systemname":"theia","timestamp":1623155141812,"status":null,"reason":null},
+   {"mid":"ABC123","systemname":"theia","timestamp":1623156329834,"status":null,"reason":null}]; */
     const [modal, setModal] = useState(false);
+    const [filterList,setFilterList]=useState([])
+    const [tableList,setTableList]=useState([])
+
+    useEffect(() => {
+        let arr = localStorage.getItem("filterList")
+       
+        if(arr){
+            let obj = JSON.parse(arr)
+            setFilterList(obj)
+        }
+    }, [])
+
+    const deleteFilter = (index) => {
+        let tempList = filterList
+        tempList.splice(index, 1)
+        localStorage.setItem("filterList", JSON.stringify(tempList))
+        setFilterList(tempList)
+         //fetchData();
+         window.location.reload()
+         fetchData()
+        
+    
+    }
+
+    const updateListArray = (obj, index) => {
+        let tempList = filterList
+        tempList[index] = obj
+        localStorage.setItem("filterList", JSON.stringify(tempList))
+        setFilterList(tempList)
+        window.location.reload()
+    }
 
     const toggle = () => {
         setModal(!modal)
     }
 
-    const saveFilter = (field, fieldValue) => {
-        setTransaction({...transaction, [field]: fieldValue})
+    const saveFilter = (filterObj) => {
+        let tempList = filterList
+        tempList.push(filterObj)
+        localStorage.setItem("filterList", JSON.stringify(tempList))
+        setFilterList(filterList)
         setModal(false)
+
+        console.log("filterList is",filterList)
     }
+
+    async function fetchData(){
+
+        if(filterList.length===0){
+            setTableList([{"mid":null,"systemname":null,"timestamp":null,"status":null,"reason":null}])
+        }else{
+            const url = 'http://localhost:8080/getbyquery';
+
+            const settings={
+            method: 'POST',
+            body: JSON.stringify(filterList),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        };
+           var res= await fetch(url,settings).
+           then(response => response.text()).then(data=>{
+               
+                setTableList(JSON.parse(data));
+                
+                return data;
+            });
+               
+        }
+       
+        
+    }
+
 
     return (
         <>
             <div className = "header text-center" style = {{height: '200px', 
             width: '100%', backgroundColor: '#E9EEF6'}}>
-                <Button className = "btn btn-secondary" style = {{marginTop: '7%'}}
+                <Button className = "btn btn-info" style = {{marginTop: '7%'}}
                 onClick = {() => setModal(true)}>
                     ADD FILTER</Button>
-                <Button onClick = {() => {
-                    Object.keys(transaction).map(k => 
-                        console.log(k + ", " + transaction[k]))
-                }}>Test</Button>
             </div>
+
             <div className = "filter-container">
-                {Object.keys(transaction).map((k, v) => 
-                {if(transaction[k] !== "") {
-                    console.log(k + ", " + transaction[k]);
-                    <Card key = {k} value = {transaction[k]} index = {v}></Card>
-                }})}
+            {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter} updateListArray = {updateListArray}/> )}
             </div>
-            <CreateFilter toggle = {toggle} modal = {modal} saveFilter = {saveFilter}/>
+            <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
+            {/* <div className = "header text-center">
+                <Button className = "btn btn-info" onClick={fetchData}>
+                    APPLY </Button>
+            </div> */}
+      <Tables tableList={tableList}></Tables>
         </>
     )
 }
