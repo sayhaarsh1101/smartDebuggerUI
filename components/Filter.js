@@ -77,7 +77,8 @@ const Filter = () => {
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
             </div> */}
-      <Tables tableList={tableList}></Tables>
+  {/* { (tableList.length>=0) && <Tables tableList={tableList}></Tables>} */}
+    {(tableList.length >0) ? <Tables tableList={tableList}></Tables> : " "}
         </>
     )
 }
