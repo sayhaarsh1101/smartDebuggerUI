@@ -27,9 +27,9 @@ const Filter = () => {
         tempList.splice(index, 1)
         localStorage.setItem("filterList", JSON.stringify(tempList))
         setFilterList(tempList)
-         //fetchData();
+         
          window.location.reload()
-         fetchData()
+         //fetchData();
         
     
     }
@@ -97,10 +97,10 @@ const Filter = () => {
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter} updateListArray = {updateListArray}/> )}
             </div>
             <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
-            {/* <div className = "header text-center">
+            <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
-            </div> */}
+            </div>
       <Tables tableList={tableList}></Tables>
         </>
     )

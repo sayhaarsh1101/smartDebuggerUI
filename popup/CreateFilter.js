@@ -21,7 +21,7 @@ const CreateFilter = ({fetchData,modal, toggle, save}) => {
         filterObj["field"] = field
         filterObj["fieldValue"] = fieldValue
         save(filterObj)
-        fetchData()
+       // fetchData()
     }
 
     return (
