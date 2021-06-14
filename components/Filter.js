@@ -3,13 +3,19 @@ import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
 import Tables from '../components/Tables'
+import Calender from '../components/Calender'
 
 const Filter = () => {
    
     const [modal, setModal] = useState(false);
     const [filterList,setFilterList]=useState([])
     const [tableList,setTableList]=useState([])
-
+    const [calenderstate, setcalenderstate] = useState(
+        {startDate: null,
+        endDate: null,
+        })
+    var calenderStartDate
+    var calenderEndDate
 
     const deleteFilter = (index) => {
         let tempList = filterList
@@ -36,9 +42,10 @@ const Filter = () => {
     }
 
     async function fetchData(){
+        
  
-        const url = 'http://localhost:8080/getbyquery';
-
+        const url = "http://localhost:8080/datefilterquery/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
+        console.log(url)
             const settings={
             method: 'POST',
             body: JSON.stringify(filterList),
@@ -54,8 +61,7 @@ const Filter = () => {
                 
                 return data;
             });
-       /* console.log("the res is",res)
-       console.log("the list of res is",res._source) */
+
         
     }
 
@@ -72,12 +78,14 @@ const Filter = () => {
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
+            <Calender calenderStartDate={calenderStartDate} calenderEndDate={calenderEndDate} setcalenderstate={setcalenderstate}calenderstate={calenderstate}></Calender>
             <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
             </div> */}
   {/* { (tableList.length>=0) && <Tables tableList={tableList}></Tables>} */}
+  
     {(tableList.length >0) ? <Tables tableList={tableList}></Tables> : " "}
         </>
     )

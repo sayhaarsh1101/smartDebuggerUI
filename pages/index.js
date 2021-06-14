@@ -15,6 +15,7 @@ export default function Home() {
       </div>
       <div style={{ marginTop: '5%', marginLeft: '5%', marginRight: '5%' }}>
 
+      
         <Filter></Filter>
       </div>
 
