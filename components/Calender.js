@@ -18,7 +18,7 @@ const Calender = () => {
 
     return (
         <div>
-      <DateRangePicker onCallback={handleCallback}>
+      <DateRangePicker  onCallback={handleCallback}>
           <input type="text" className="form-control col-4" />
         </DateRangePicker>
         {/* <br />
