@@ -39,7 +39,6 @@ const CreateFilter = ({fetchData,modal, toggle, save}) => {
                         <option>amount</option>
                         <option>systemname</option>
                         <option>status</option>
-                        <option>timestamp</option>
                     </Input>
                 </FormGroup>
                 <FormGroup style = {{marginTop: '20px'}}>
