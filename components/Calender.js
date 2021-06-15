@@ -1,43 +1,34 @@
 
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
-import React, {useEffect,useState} from 'react'
-const Calender = ({calenderEndDate,calenderStartDate,setcalenderstate,calenderstate}) => {
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import {multiStateContext} from './StateContext'
+import React, { Component , useState , useContext} from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+const Calender = () => {
    
+    const {calenderstate, setcalenderstate  } = useContext(multiStateContext);
+    
+    const handleCallback=(start,end)=>{
 
-    const handleInputs=(e)=>{
+        setcalenderstate({...calenderstate,startDate:start._d,endDate:end._d})
+      
+      }
 
-  var calenderStartDate=e.value[0];
-  var calenderEndDate=e.value[1];
-
-  setcalenderstate({...calenderstate,startDate:e.value[0],endDate:e.value[1]})
-
-}
-
-    const presets = [
-        { label: 'Today', start: new Date(), end: new Date() },
-        { label: 'Last Month', start: new Date(new Date().setDate(new Date().getDate() - 30)), end: new Date() },
-        { label: 'Last Week', start: new Date(new Date().setDate(new Date().getDate() - 7)), end: new Date() }
-        ];
-
-
+      
 
     return (
         <div>
-          {/* <DateRangePickerComponent placeholder="Enter Date Range"
-          startDate={startValue}
-          endDate={endValue}
-          min={minDate}
-          max={maxDate}
-          minDays={3}
-          maxDays={5}
-          format="dd-MMM-yy"
-          //Uncomment below code to show month range picker. Also comment the properties min, max, mindays and maxdays
-          // start="Year"
-          // depth="Year"
-          ></DateRangePickerComponent> */}
-            <DateRangePickerComponent placeholder='Select a range' presets={presets} onChange={handleInputs} />
-  
-        </div>
+      <DateRangePicker onCallback={handleCallback}>
+          <input type="text" className="form-control col-4" />
+        </DateRangePicker>
+        {/* <br />
+        <h4>
+          startDate: <small>{state?.start?.format('MM/DD/YYYY (dddd)')}</small>
+        </h4>
+        <h4>
+          endDate: <small>{state?.end?.format('MM/DD/YYYY (dddd)')}</small>
+        </h4>*/}
+        </div> 
       );
 };
 

@@ -1,22 +1,26 @@
-import React, {useEffect,useState} from 'react'
+import React, {useEffect,useState,useContext} from 'react'
 import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
 import Tables from '../components/Tables'
-import Calender from '../components/Calender'
+import Calender from './Calender'
+import {multiStateContext} from './StateContext'
+
 
 const Filter = () => {
+
+    const {calenderstate, setcalenderstate  } = useContext(multiStateContext);
+
+    useEffect(async ()=>{
+          await fetchData();
+    },[calenderstate])
    
     const [modal, setModal] = useState(false);
     const [filterList,setFilterList]=useState([])
     const [tableList,setTableList]=useState([])
-    const [calenderstate, setcalenderstate] = useState(
-        {startDate: null,
-        endDate: null,
-        })
-    var calenderStartDate
-    var calenderEndDate
-
+    
+   
+   
     const deleteFilter = (index) => {
         let tempList = filterList
         tempList.splice(index, 1)
@@ -78,8 +82,8 @@ const Filter = () => {
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
-            <Calender calenderStartDate={calenderStartDate} calenderEndDate={calenderEndDate} setcalenderstate={setcalenderstate}calenderstate={calenderstate}></Calender>
-            <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
+            <Calender />
+            <CreateFilter  fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
