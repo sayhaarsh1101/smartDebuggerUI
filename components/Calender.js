@@ -1,13 +1,14 @@
 
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import React, {useEffect,useState} from 'react'
-const Calender = ({calenderEndDate,calenderStartDate,setcalenderstate,calenderstate}) => {
+const Calender = ({calenderStartDate,calenderEndDate,setcalenderstate,calenderstate}) => {
    
 
     const handleInputs=(e)=>{
 
-  var calenderStartDate=e.value[0];
-  var calenderEndDate=e.value[1];
+      calenderEndDate=e.value[1];
+      calenderStartDate=e.value[0];
+  
 
   setcalenderstate({...calenderstate,startDate:e.value[0],endDate:e.value[1]})
 

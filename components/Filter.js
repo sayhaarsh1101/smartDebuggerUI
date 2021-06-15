@@ -78,7 +78,7 @@ const Filter = () => {
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
-            <Calender calenderStartDate={calenderStartDate} calenderEndDate={calenderEndDate} setcalenderstate={setcalenderstate}calenderstate={calenderstate}></Calender>
+            <Calender calenderStartDate={calenderStartDate} calenderEndDate={calenderEndDate} setcalenderstate={setcalenderstate} calenderstate={calenderstate}></Calender>
             <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
