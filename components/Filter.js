@@ -1,22 +1,32 @@
-import React, {useEffect,useState} from 'react'
+import React, {useEffect,useState,useContext,useRef} from 'react'
 import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
 import Tables from '../components/Tables'
-import Calender from '../components/Calender'
+import Calender from './Calender'
+import {multiStateContext} from './StateContext'
+
 
 const Filter = () => {
-   
-    const [modal, setModal] = useState(false);
-    const [filterList,setFilterList]=useState([])
-    const [tableList,setTableList]=useState([])
-    const [calenderstate, setcalenderstate] = useState(
-        {startDate: null,
-        endDate: null,
-        })
-    var calenderStartDate
-    var calenderEndDate
 
+    const {fetchData,filterList,setFilterList, calenderstate, setcalenderstate ,pageAttributes,setPageAttributes, tableList,setTableList } = useContext(multiStateContext);
+    const [modal, setModal] = useState(false);
+    
+  
+    useEffect(async ()=>{
+          await fetchDocCount();
+          await fetchData();
+    },[calenderstate,filterList])
+
+    useEffect(() => {
+        fetchData()
+        
+    }, [pageAttributes])
+   
+
+    
+   
+   
     const deleteFilter = (index) => {
         let tempList = filterList
         tempList.splice(index, 1)
@@ -41,10 +51,11 @@ const Filter = () => {
         console.log("filterList is",filterList)
     }
 
-    async function fetchData(){
-        
- 
-        const url = "http://localhost:8080/datefilterquery/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
+    
+
+    async function fetchDocCount(){
+
+        const url = "http://localhost:8080/getbyagg/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
         console.log(url)
             const settings={
             method: 'POST',
@@ -55,14 +66,10 @@ const Filter = () => {
         };
            var res= await fetch(url,settings).
            then(response => response.text()).then(data=>{
-               
-            
-                setTableList(JSON.parse(data));
-                
-                return data;
+            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount,totalpagecount: Math.ceil(JSON.parse(data).buckets[0].docCount/pageAttributes.pagesize)}) ;
+            return data;
             });
 
-        
     }
 
 
@@ -78,13 +85,13 @@ const Filter = () => {
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
-            <Calender calenderStartDate={calenderStartDate} calenderEndDate={calenderEndDate} setcalenderstate={setcalenderstate} calenderstate={calenderstate}></Calender>
-            <CreateFilter fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
+
+            <Calender />
+            <CreateFilter  fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
             </div> */}
-  {/* { (tableList.length>=0) && <Tables tableList={tableList}></Tables>} */}
   
     {(tableList.length >0) ? <Tables tableList={tableList}></Tables> : " "}
         </>

@@ -1,44 +1,34 @@
 
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
-import React, {useEffect,useState} from 'react'
-const Calender = ({calenderStartDate,calenderEndDate,setcalenderstate,calenderstate}) => {
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import {multiStateContext} from './StateContext'
+import React, { Component , useState , useContext} from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+
+const Calender = () => {
    
+    const {calenderstate, setcalenderstate  } = useContext(multiStateContext);
+    
+    const handleCallback=(start,end)=>{
+        setcalenderstate({...calenderstate,startDate:start._d,endDate:end._d})
+      }
 
-    const handleInputs=(e)=>{
-
-      calenderEndDate=e.value[1];
-      calenderStartDate=e.value[0];
-  
-
-  setcalenderstate({...calenderstate,startDate:e.value[0],endDate:e.value[1]})
-
-}
-
-    const presets = [
-        { label: 'Today', start: new Date(), end: new Date() },
-        { label: 'Last Month', start: new Date(new Date().setDate(new Date().getDate() - 30)), end: new Date() },
-        { label: 'Last Week', start: new Date(new Date().setDate(new Date().getDate() - 7)), end: new Date() }
-        ];
-
-
+      
 
     return (
         <div>
-          {/* <DateRangePickerComponent placeholder="Enter Date Range"
-          startDate={startValue}
-          endDate={endValue}
-          min={minDate}
-          max={maxDate}
-          minDays={3}
-          maxDays={5}
-          format="dd-MMM-yy"
-          //Uncomment below code to show month range picker. Also comment the properties min, max, mindays and maxdays
-          // start="Year"
-          // depth="Year"
-          ></DateRangePickerComponent> */}
-            <DateRangePickerComponent placeholder='Select a range' presets={presets} onChange={handleInputs} />
-  
-        </div>
+      <DateRangePicker  onCallback={handleCallback} initialSettings={
+        { timePicker:true, 
+          locale: {format: 'DD/MM/YYYY hh:mm A'} , 
+          ranges: {'Today': [new Date(new Date().setHours(0,0,0,0)) , new Date()], 
+                  ' Last 7 Days': [new Date(new Date().setDate(new Date().getDate()-7)), new Date()],
+                  ' Last 30 Days': [new Date(new Date().setDate(new Date().getDate()-29)), new Date()],
+                   } 
+          }}>
+          
+          <input type="text" className="form-control col-4" />
+        </DateRangePicker>
+        </div> 
       );
 };
 
