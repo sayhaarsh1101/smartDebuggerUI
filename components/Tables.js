@@ -3,7 +3,6 @@ import {TableHead, TableBody, TableCell, TableRow, Table}
  from '@material-ui/core'
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import TablePagination from "@material-ui/core/TablePagination";
 import {multiStateContext} from './StateContext'
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
@@ -44,7 +43,7 @@ async  function  dateconverter (tableList){
 
 const Tables = ({tableList})=> {
 
-  const {fetchData,pageAttributes,setPageAttributes } = useContext(multiStateContext);
+  const {pageAttributes,setPageAttributes } = useContext(multiStateContext);
 
   const [buttonState,setButtonState]= useState({ nextButtonState : false, PrevButtonState:true })
 
@@ -53,54 +52,32 @@ const Tables = ({tableList})=> {
 
     const pagesizeChangeHandler = (e)=>{
 
-       setPageAttributes({...pageAttributes,pagesize: parseInt(e.target.value)})  
+       setPageAttributes({...pageAttributes,pageno: 1,pagesize: parseInt(e.target.value),totalpagecount: Math.ceil((pageAttributes.docCount/parseInt(e.target.value)))}) 
+      
  }
 
-  const prevPageHandler =()=>{
-    if(pageAttributes.pageno>2  ){
-    setPageAttributes({...pageAttributes ,pageno: pageAttributes.pageno-1});
-    setButtonState({...buttonState,nextButtonState:false})
-  }
+const prevPageHandler =()=>{
+  setPageAttributes({...pageAttributes ,pageno: pageAttributes.pageno-1});
+ }
 
-  if(pageAttributes.pageno===2)
-  {   setPageAttributes({...pageAttributes ,pageno: pageAttributes.pageno-1});
-    setButtonState({...buttonState,PrevButtonState:true})}
-
+const nextPageHandler =()=>{
+    setPageAttributes({...pageAttributes ,pageno: pageAttributes.pageno+1});
   }
 
 
 
-  const nextPageHandler =()=>{
-     if(pageAttributes.pageno*pageAttributes.pagesize<pageAttributes.docCount)
-    {
-      setPageAttributes({...pageAttributes ,pageno: pageAttributes.pageno+1});
-       setButtonState({...buttonState,PrevButtonState:false})
-    }
-    else
-  { setButtonState({...buttonState,PrevButtonState:false})}
-  
-      if((pageAttributes.pageno+1)*pageAttributes.pagesize>pageAttributes.docCount)
-      {
-        setButtonState({...buttonState,nextButtonState:true})
-        
-      }
 
-    }
-
-    console.log("tableList in table is ",tableList)
-
-    console.log("length is ",tableList.length)
-    return (
+  return (
       <div style={{marginLeft: 60, marginRight: 60}}>
 
 <Paper className={classes.root} >
    <div>
      
-   <button onClick={prevPageHandler} disabled={buttonState.PrevButtonState} >Prev page</button>
+   <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button>
   <span>     </span>
-  <button onClick={nextPageHandler} disabled={buttonState.nextButtonState} >Next page</button>
+  <button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} >Next page</button>
   <span>  </span>
-  {pageAttributes.docCount} 
+  TOTAL DocCount {pageAttributes.docCount}    TOTAL PageCount {pageAttributes.totalpagecount} 
   <FormGroup> <Input type="select" name="select" id="exampleSelect" 
                    onChange={pagesizeChangeHandler} >
                         <option>5</option>

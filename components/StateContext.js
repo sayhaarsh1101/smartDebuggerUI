@@ -1,5 +1,4 @@
 import React, { useState} from 'react'
-import Home from '../pages';
 import App from '../pages/App';
 
 
@@ -8,7 +7,7 @@ export const multiStateContext =React.createContext();
 const StateContext = () => {
   
   const [calenderstate, setcalenderstate] = useState(
-    {startDate: new Date(),
+    {startDate: new Date(new Date().setHours(0,0,0,0)),
     endDate: new Date(),
     })
 
@@ -20,7 +19,8 @@ const StateContext = () => {
         {
             pageno:1,
             pagesize:5,
-            docCount:0
+            docCount:0,
+            totalpagecount:1
         }
     )
 

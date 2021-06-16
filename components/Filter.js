@@ -4,7 +4,6 @@ import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
 import Tables from '../components/Tables'
 import Calender from './Calender'
-import ServerPaginationGrid from './demo'
 import {multiStateContext} from './StateContext'
 
 
@@ -13,17 +12,10 @@ const Filter = () => {
     const {fetchData,filterList,setFilterList, calenderstate, setcalenderstate ,pageAttributes,setPageAttributes, tableList,setTableList } = useContext(multiStateContext);
     const [modal, setModal] = useState(false);
     
-    const mounted = useRef();
+  
     useEffect(async ()=>{
-        if (!mounted.current) {
-            mounted.current = true;
-          }
-          else {
-           
-        console.log("useEffect")
-          await fetchData();
           await fetchDocCount();
-          }
+          await fetchData();
     },[calenderstate,filterList])
 
     useEffect(() => {
@@ -74,12 +66,8 @@ const Filter = () => {
         };
            var res= await fetch(url,settings).
            then(response => response.text()).then(data=>{
-               
-            if(data!==null)
-            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount}) ;
-                
-            
-                return data;
+            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount,totalpagecount: Math.ceil(JSON.parse(data).buckets[0].docCount/pageAttributes.pagesize)}) ;
+            return data;
             });
 
     }
@@ -97,14 +85,13 @@ const Filter = () => {
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
-             {/* <ServerPaginationGrid fetchData={fetchData} /> */}
+
             <Calender />
             <CreateFilter  fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
             </div> */}
-  {/* { (tableList.length>=0) && <Tables tableList={tableList}></Tables>} */}
   
     {(tableList.length >0) ? <Tables tableList={tableList}></Tables> : " "}
         </>
