@@ -7,6 +7,8 @@ import {multiStateContext} from './StateContext'
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -94,11 +96,18 @@ const nextPageHandler =()=>{
                     
                     </div>
                     </div>
-   <div style={{marginLeft:'65%',display:'flex'}}>
-   {/* <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button> */}
-   <NavigateBeforeIcon onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} color="primary" fontSize="large" style={{marginRight:'20%'}} />
-  <NavigateNextIcon onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} color="primary" fontSize="large"/>
-  {/* <button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} >Next page</button> */}
+   <div style={{marginLeft:'58%',display:'flex'}}>
+   {/*  <Button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} variant="outlined" color="primary" style={{marginRight:'5%',height:'35px'}}>Prev</Button>
+  <Button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} variant="outlined" color="primary" style={{height:'35px'}} >Next</Button> */}
+   <IconButton onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} color="primary" size="large" style={{marginRight:'20%'}} >
+   <NavigateBeforeIcon />
+   </IconButton>
+   <IconButton onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} color="primary" size="large">
+   <NavigateNextIcon />
+   </IconButton>
+   
+  
+  
   </div>
 
    </div>
