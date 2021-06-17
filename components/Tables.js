@@ -70,7 +70,7 @@ const nextPageHandler =()=>{
   return (
       <div style={{marginLeft: 60, marginRight: 60}}>
 
-<Paper className={classes.root} >
+<Paper className={classes.root} style={{width: '100%', justifyContent: 'center',marginBottom:'20px'}}>
    <div>
      
    <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button>
@@ -91,7 +91,7 @@ const nextPageHandler =()=>{
                 <Table border="1" style={{width: '100%', justifyContent: 'center'}} size="small" 
               aria-label="caption label">
                  <TableHead>
-                     <TableRow style={{backgroundColor:'burlywood',color:'alice'}} >
+                     <TableRow style={{backgroundColor:'#00b9f5',color:'alice'}} >
                          <TableCell>mid</TableCell>
                          <TableCell>status</TableCell>
                          <TableCell>reason</TableCell>
