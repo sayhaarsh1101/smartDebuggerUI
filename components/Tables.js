@@ -5,6 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import {multiStateContext} from './StateContext'
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,11 +75,11 @@ const nextPageHandler =()=>{
       <div style={{marginLeft: 60, marginRight: 60}}>
 
 <Paper className={classes.root} style={{marginBottom:'3%'}}>
-   <div style={{display:'flex',height:'0.5%'}}>
+   <div style={{display:'flex',height:'0.5%',border: 'solid'}}>
      
    
  <div style={{display:'flex'}}> 
-   <div style={{marginRight:'5%'}}><h6>DocCount</h6> <div style={{fontWeight:'bold'}} >{pageAttributes.docCount} </div> </div> 
+   <div style={{marginRight:'5%',marginLeft:'2%'}}><h6>DocCount</h6> <div style={{fontWeight:'bold'}} >{pageAttributes.docCount} </div> </div> 
    <div style={{marginRight:'5%'}}><h6>PageCount</h6><div style={{fontWeight:'bold'}}>{pageAttributes.totalpagecount} </div></div>
   <div style={{display:'flex', marginRight:'10%'}}>
     <h6 style={{marginRight:'5%'}}>PageSize</h6> 
@@ -93,10 +97,12 @@ const nextPageHandler =()=>{
                     </div>
                     </div>
    <div style={{marginLeft:'65%',display:'flex'}}>
-   <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button>
-  <span>     </span>
-  <button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} >Next page</button>
-  <span>  </span>
+   <IconButton onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} color="primary" size="large" style={{marginRight:'20%'}} >
+   <NavigateBeforeIcon />
+   </IconButton>
+   <IconButton onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} color="primary" size="large">
+   <NavigateNextIcon />
+   </IconButton>
   </div>
 
    </div>
