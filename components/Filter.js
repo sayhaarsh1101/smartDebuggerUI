@@ -75,18 +75,20 @@ const Filter = () => {
 
     return (
         <>
-            <div className = "header text-center" style = {{height: '200px', 
-            width: '100%', backgroundColor: '#E9EEF6'}}>
-                <Button className = "btn btn-info" style = {{marginTop: '7%'}}
+            <div className = "header text-center" style = {{height: '100px', 
+            width: '100%',display:'flex'}}>
+                <div style = {{marginLeft: '30%',marginTop:'1.5%'}}>
+                <Button className = "btn btn-info" 
                 onClick = {() => setModal(true)}>
-                    ADD FILTER</Button>
+                    ADD FILTER</Button></div>
+                    <div style = {{marginLeft: '10%',width:'30%',marginTop:'1.5%'}}> <Calender /></div>
             </div>
 
             <div className = "filter-container">
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
 
-            <Calender />
+        {/* <Calender /> */}
             <CreateFilter  fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
