@@ -39,9 +39,9 @@ a {
   display: flex;
   flex-direction: column;
   margin-right: 10px;
-  background-color: rgb(171, 179, 167);
+  background-color: #7a8383;
   margin-bottom: 2%;
-  border: 2px solid rgb(224, 151, 151);
+  border: 2px solid #ffffff;
   padding: 10px;
   border-radius: 25px;
 }

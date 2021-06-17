@@ -70,15 +70,17 @@ const nextPageHandler =()=>{
   return (
       <div style={{marginLeft: 60, marginRight: 60}}>
 
-<Paper className={classes.root} style={{width: '100%', justifyContent: 'center',marginBottom:'20px'}}>
-   <div>
+<Paper className={classes.root} style={{marginBottom:'3%'}}>
+   <div style={{display:'flex',height:'0.5%'}}>
      
-   <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button>
-  <span>     </span>
-  <button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} >Next page</button>
-  <span>  </span>
-  TOTAL DocCount {pageAttributes.docCount}    TOTAL PageCount {pageAttributes.totalpagecount} 
-  <FormGroup> <Input type="select" name="select" id="exampleSelect" 
+   
+ <div style={{display:'flex'}}> 
+   <div style={{marginRight:'5%'}}><h6>DocCount</h6> <div style={{fontWeight:'bold'}} >{pageAttributes.docCount} </div> </div> 
+   <div style={{marginRight:'5%'}}><h6>PageCount</h6><div style={{fontWeight:'bold'}}>{pageAttributes.totalpagecount} </div></div>
+  <div style={{display:'flex', marginRight:'10%'}}>
+    <h6 style={{marginRight:'5%'}}>PageSize</h6> 
+  
+   <FormGroup style={{width:'50px'}}> <Input type="select" name="select" id="exampleSelect" 
                    onChange={pagesizeChangeHandler} >
                         <option>5</option>
                         <option>10</option>
@@ -87,6 +89,16 @@ const nextPageHandler =()=>{
 
                     </Input>
                     </FormGroup>
+                    
+                    </div>
+                    </div>
+   <div style={{marginLeft:'65%',display:'flex'}}>
+   <button onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} >Prev page</button>
+  <span>     </span>
+  <button onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} >Next page</button>
+  <span>  </span>
+  </div>
+
    </div>
                 <Table border="1" style={{width: '100%', justifyContent: 'center'}} size="small" 
               aria-label="caption label">

@@ -15,7 +15,7 @@ function App() {
         <div>
         <h1 style={{textAlign:'center'}}>Smart Debugger</h1>
       </div>
-      <div style={{ marginTop: '5%', marginLeft: '5%', marginRight: '5%' }}>
+      <div style={{ marginTop: '1%', marginLeft: '5%', marginRight: '5%' }}>
 
       
         <Filter></Filter>
