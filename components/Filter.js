@@ -75,9 +75,9 @@ const Filter = () => {
 
     return (
         <>
-            <div className = "header text-center" style = {{height: '200px', 
-            width: '100%', backgroundColor: '#E9EEF6'}}>
-                <Button className = "btn btn-info" style = {{marginTop: '7%'}}
+            <div className = "header text-center" style = {{height: '100px', 
+            width: '100%'}}>
+                <Button className = "btn btn-info" style = {{marginTop: '2.5%'}}
                 onClick = {() => setModal(true)}>
                     ADD FILTER</Button>
             </div>

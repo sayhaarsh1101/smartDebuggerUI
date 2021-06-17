@@ -17,7 +17,7 @@ const Calender = () => {
 
     return (
         <div>
-      <DateRangePicker  onCallback={handleCallback} initialSettings={
+      <DateRangePicker disableBackdropClick  onCallback={handleCallback} initialSettings={
         { timePicker:true, 
           locale: {format: 'DD/MM/YYYY hh:mm A'} , 
           ranges: {'Today': [new Date(new Date().setHours(0,0,0,0)) , new Date()], 
@@ -27,6 +27,7 @@ const Calender = () => {
           }}>
           
           <input type="text" className="form-control col-4" />
+
         </DateRangePicker>
         </div> 
       );
