@@ -74,17 +74,17 @@ const nextPageHandler =()=>{
   return (
       <div style={{marginLeft: 60, marginRight: 60}}>
 
-<Paper className={classes.root} style={{marginBottom:'3%'}}>
-   <div style={{display:'flex',height:'0.5%',border: 'solid'}}>
+<Paper className={classes.root} >
+   <div style={{height:'0.5%'}}>
      
    
  <div style={{display:'flex'}}> 
-   <div style={{marginRight:'5%',marginLeft:'2%'}}><h6>DocCount</h6> <div style={{fontWeight:'bold'}} >{pageAttributes.docCount} </div> </div> 
-   <div style={{marginRight:'5%'}}><h6>PageCount</h6><div style={{fontWeight:'bold'}}>{pageAttributes.totalpagecount} </div></div>
+   <div style={{marginRight:'5%',marginLeft:'2%',display:'flex',marginTop:'1.2%'}}><h6 style={{marginRight:'8%'}}>DocCount:</h6><h6 style={{fontWeight:'bold'}} >{pageAttributes.docCount} </h6> </div> 
+   {/* <div style={{marginRight:'5%'}}><h6>PageCount</h6><div style={{fontWeight:'bold'}}>{pageAttributes.totalpagecount} </div></div> */}
   <div style={{display:'flex', marginRight:'10%'}}>
-    <h6 style={{marginRight:'5%'}}>PageSize</h6> 
+    <h6 style={{marginRight:'10%',marginTop:'12%'}}>PageSize</h6> 
   
-   <FormGroup style={{width:'50px'}}> <Input type="select" name="select" id="exampleSelect" 
+   <FormGroup style={{width:'50px',marginTop:'5%'}}> <Input type="select" name="select" id="exampleSelect" 
                    onChange={pagesizeChangeHandler} >
                         <option>5</option>
                         <option>10</option>
@@ -96,14 +96,9 @@ const nextPageHandler =()=>{
                     
                     </div>
                     </div>
-   <div style={{marginLeft:'65%',display:'flex'}}>
-   <IconButton onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} color="primary" size="large" style={{marginRight:'20%'}} >
-   <NavigateBeforeIcon />
-   </IconButton>
-   <IconButton onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} color="primary" size="large">
-   <NavigateNextIcon />
-   </IconButton>
-  </div>
+   
+   
+  
 
    </div>
                 <Table border="1" style={{width: '100%', justifyContent: 'center'}} size="small" 
@@ -130,7 +125,17 @@ const nextPageHandler =()=>{
                       ))}
                   </TableBody>
               </Table>
+   
             </Paper>
+    <div style={{display:'flex', marginLeft:'45%'}}>
+    <IconButton onClick={prevPageHandler} disabled={pageAttributes.pageno ===1} color="primary" size="large" >
+   <NavigateBeforeIcon />
+   </IconButton>
+   <div style={{fontWeight:'bold',marginTop:'2%'}} >{pageAttributes.pageno} / {pageAttributes.totalpagecount}</div>
+   <IconButton onClick={nextPageHandler} disabled={pageAttributes.pageno === pageAttributes.totalpagecount} color="primary" size="large">
+   <NavigateNextIcon />
+   </IconButton>
+    </div>
         </div>
     )
 }

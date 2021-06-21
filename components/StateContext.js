@@ -48,6 +48,24 @@ const StateContext = () => {
             });
    
     }
+    async function fetchDocCount(){
+
+        const url = "http://localhost:8080/getbyagg/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
+        console.log(url)
+            const settings={
+            method: 'POST',
+            body: JSON.stringify(filterList),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        };
+           var res= await fetch(url,settings).
+           then(response => response.text()).then(data=>{
+            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount,totalpagecount: Math.ceil(JSON.parse(data).buckets[0].docCount/pageAttributes.pagesize)}) ;
+            return data;
+            });
+
+    }
 
 
 
@@ -56,7 +74,7 @@ return (
     <div>
         <multiStateContext.Provider value={{
             calenderstate, setcalenderstate,pageAttributes,setPageAttributes,tableList,setTableList,filterList,setFilterList,
-            fetchData
+            fetchData,fetchDocCount
         }}>
             <App/>
         </multiStateContext.Provider>

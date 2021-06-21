@@ -9,13 +9,13 @@ import {multiStateContext} from './StateContext'
 
 const Filter = () => {
 
-    const {fetchData,filterList,setFilterList, calenderstate, setcalenderstate ,pageAttributes,setPageAttributes, tableList,setTableList } = useContext(multiStateContext);
+    const {fetchData,filterList,setFilterList, calenderstate, setcalenderstate ,pageAttributes,setPageAttributes, tableList,setTableList,fetchDocCount } = useContext(multiStateContext);
     const [modal, setModal] = useState(false);
     
   
     useEffect(async ()=>{
-          await fetchDocCount();
-          await fetchData();
+         await fetchDocCount();
+         await fetchData();
     },[calenderstate,filterList])
 
     useEffect(() => {
@@ -28,14 +28,16 @@ const Filter = () => {
    
    
     const deleteFilter = (index) => {
-        let tempList = filterList
-        tempList.splice(index, 1)
-        setFilterList(tempList)
-         if(tempList.length===0){
-             setTableList([]);
-         }else fetchData();
-   
-    }
+        // let tempList = filterList
+       //  tempList.splice(index, 1)
+      //   setFilterList(tempList)
+         setFilterList([...filterList.slice(0,index), ...filterList.slice(index+1)])
+      console.log("lenth",filterList.length);
+          if(filterList.length===0){
+              setTableList([]);
+          }else fetchData();
+    
+     }
 
 
 
@@ -44,33 +46,16 @@ const Filter = () => {
     }
 
     const saveFilter = (filterObj) => {
-        let tempList = filterList
-        tempList.push(filterObj)
-        setFilterList(filterList)
+        // let tempList = filterList
+        // tempList.push(filterObj)
+        setFilterList([...filterList,filterObj])
         setModal(false)
         console.log("filterList is",filterList)
     }
 
     
 
-    async function fetchDocCount(){
 
-        const url = "http://localhost:8080/getbyagg/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
-        console.log(url)
-            const settings={
-            method: 'POST',
-            body: JSON.stringify(filterList),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        };
-           var res= await fetch(url,settings).
-           then(response => response.text()).then(data=>{
-            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount,totalpagecount: Math.ceil(JSON.parse(data).buckets[0].docCount/pageAttributes.pagesize)}) ;
-            return data;
-            });
-
-    }
 
 
     return (
