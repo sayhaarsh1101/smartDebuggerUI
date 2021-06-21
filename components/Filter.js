@@ -1,4 +1,4 @@
-import React, {useEffect,useState,useContext} from 'react'
+import React, {useEffect,useState,useContext,useRef} from 'react'
 import { Button } from 'reactstrap'
 import CreateFilter from '../popup/CreateFilter'
 import Card from '../components/Card'
@@ -9,15 +9,21 @@ import {multiStateContext} from './StateContext'
 
 const Filter = () => {
 
-    const {calenderstate, setcalenderstate  } = useContext(multiStateContext);
-
-    useEffect(async ()=>{
-          await fetchData();
-    },[calenderstate])
-   
+    const {fetchData,filterList,setFilterList, calenderstate, setcalenderstate ,pageAttributes,setPageAttributes, tableList,setTableList } = useContext(multiStateContext);
     const [modal, setModal] = useState(false);
-    const [filterList,setFilterList]=useState([])
-    const [tableList,setTableList]=useState([])
+    
+  
+    useEffect(async ()=>{
+          await fetchDocCount();
+          await fetchData();
+    },[calenderstate,filterList])
+
+    useEffect(() => {
+        fetchData()
+        
+    }, [pageAttributes])
+   
+
     
    
    
@@ -39,10 +45,11 @@ const Filter = () => {
         console.log("filterList is",filterList)
     }
 
-    async function fetchData(){
-        
- 
-        const url = "http://localhost:8080/datefilterquery/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
+    
+
+    async function fetchDocCount(){
+
+        const url = "http://localhost:8080/getbyagg/"+Date.parse(calenderstate.startDate)+"/"+Date.parse(calenderstate.endDate);
         console.log(url)
             const settings={
             method: 'POST',
@@ -51,19 +58,19 @@ const Filter = () => {
                 'Content-type': 'application/json; charset=UTF-8',
             }
         };
-        var res= await fetch(url,settings).then(response => response.text()).then(data=>{
-                setTableList(JSON.parse(data));
-                return data;
+           var res= await fetch(url,settings).
+           then(response => response.text()).then(data=>{
+            setPageAttributes({...pageAttributes,docCount:JSON.parse(data).buckets[0].docCount,totalpagecount: Math.ceil(JSON.parse(data).buckets[0].docCount/pageAttributes.pagesize)}) ;
+            return data;
             });
 
-        
     }
 
     return (
         <>
-            <div className = "header text-center" style = {{height: '200px', 
-            width: '100%', backgroundColor: '#E9EEF6'}}>
-                <Button className = "btn btn-info" style = {{marginTop: '7%'}}
+            <div className = "header text-center" style = {{height: '100px', 
+            width: '100%'}}>
+                <Button className = "btn btn-info" style = {{marginTop: '2.5%'}}
                 onClick = {() => setModal(true)}>
                     ADD FILTER</Button>
             </div>
@@ -72,13 +79,13 @@ const Filter = () => {
             {filterList && filterList.map((obj , index) => <Card filterObj = {obj} 
             index = {index} deleteFilter = {deleteFilter}/> )}
             </div>
+
             <Calender />
             <CreateFilter  fetchData={fetchData} toggle = {toggle} modal = {modal} save = {saveFilter}/>
            {/*  <div className = "header text-center">
                 <Button className = "btn btn-info" onClick={fetchData}>
                     APPLY </Button>
             </div> */}
-  {/* { (tableList.length>=0) && <Tables tableList={tableList}></Tables>} */}
   
     {(tableList.length >0) ? <Tables tableList={tableList}></Tables> : " "}
         </>
