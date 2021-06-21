@@ -13,10 +13,16 @@ const Filter = () => {
     const [modal, setModal] = useState(false);
     
   
-    useEffect(async ()=>{
-          await fetchDocCount();
-          await fetchData();
-    },[calenderstate,filterList])
+    useEffect(()=>{
+        fetchDocCount();
+        fetchData();
+   },[filterList])
+    useEffect(()=>{
+    fetchDocCount();
+          fetchData();
+    },[calenderstate])
+
+   
 
     useEffect(() => {
         fetchData()
@@ -33,7 +39,8 @@ const Filter = () => {
         setFilterList(tempList)
          if(tempList.length===0){
              setTableList([]);
-         }else fetchData();
+         }else {fetchData();
+        fetchDocCount();}
    
     }
 
@@ -46,7 +53,8 @@ const Filter = () => {
     const saveFilter = (filterObj) => {
         let tempList = filterList
         tempList.push(filterObj)
-        setFilterList(filterList)
+        setFilterList(tempList)
+        fetchDocCount()
         setModal(false)
         console.log("filterList is",filterList)
     }
