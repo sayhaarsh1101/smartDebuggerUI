@@ -79,12 +79,12 @@ const nextPageHandler =()=>{
      
    
  <div style={{display:'flex'}}> 
-   <div style={{marginRight:'5%',marginLeft:'2%',display:'flex',marginTop:'1.2%'}}><h6 style={{marginRight:'8%'}}>DocCount:</h6><h6 style={{fontWeight:'bold'}} >{pageAttributes.docCount} </h6> </div> 
+   <div style={{marginRight:'5%',marginLeft:'2%',display:'flex',marginTop:'1.5%'}}><h6 style={{marginRight:'8%'}}>DocCount:</h6><h6 style={{fontWeight:'bold'}} >{pageAttributes.docCount} </h6> </div> 
    {/* <div style={{marginRight:'5%'}}><h6>PageCount</h6><div style={{fontWeight:'bold'}}>{pageAttributes.totalpagecount} </div></div> */}
-  <div style={{display:'flex', marginRight:'10%'}}>
-    <h6 style={{marginRight:'10%',marginTop:'12%'}}>PageSize</h6> 
+
+    <h6 style={{marginRight:'1%',marginTop:'1.5%'}}>PageSize</h6> 
   
-   <FormGroup style={{width:'50px',marginTop:'5%'}}> <Input type="select" name="select" id="exampleSelect" 
+   <FormGroup style={{width:'50px',marginTop:'1%',marginBottom:'1%'}}> <Input type="select" name="select" id="exampleSelect" 
                    onChange={pagesizeChangeHandler} >
                         <option>5</option>
                         <option>10</option>
@@ -94,12 +94,9 @@ const nextPageHandler =()=>{
                     </Input>
                     </FormGroup>
                     
-                    </div>
+                    
                     </div>
    
-   
-  
-
    </div>
                 <Table border="1" style={{width: '100%', justifyContent: 'center'}} size="small" 
               aria-label="caption label">
