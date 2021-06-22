@@ -18,10 +18,18 @@ const Filter = () => {
          await fetchData();
     },[calenderstate,filterList])
 
+
+    const isInitialMount = useRef(true);
+    
     useEffect(() => {
-        fetchData()
+
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+         } else {
+            fetchData()
+         }
         
-    }, [pageAttributes])
+    }, [pageAttributes.pagesize,pageAttributes.pageno])
    
 
     
@@ -51,6 +59,7 @@ const Filter = () => {
         setFilterList([...filterList,filterObj])
         setModal(false)
         console.log("filterList is",filterList)
+        setPageAttributes({...pageAttributes ,pageno: 1})
     }
 
     
