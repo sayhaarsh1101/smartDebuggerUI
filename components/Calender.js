@@ -7,10 +7,12 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 
 const Calender = () => {
    
-    const {calenderstate, setcalenderstate  } = useContext(multiStateContext);
+    const {calenderstate, setcalenderstate,setPageAttributes ,pageAttributes } = useContext(multiStateContext);
     
     const handleCallback=(start,end)=>{
+      setPageAttributes({...pageAttributes ,pageno: 1})                                                                                                                                                                                                              
         setcalenderstate({...calenderstate,startDate:start._d,endDate:end._d})
+       
       }
 
       
